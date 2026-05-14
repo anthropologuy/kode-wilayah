@@ -51,7 +51,7 @@ export default function SearchWilayah() {
 
           const response =
             await fetch(
-              `/api/search?q=${encodeURIComponent(query)}`
+              `/kode-wilayah/api/search?q=${encodeURIComponent(query)}`
             );
 
           const json =
