@@ -1,36 +1,243 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# API Kode Wilayah Indonesia
 
-## Getting Started
+API kode wilayah administrasi Indonesia berdasarkan Kepmendagri terbaru.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Fitur
+
+* Data Provinsi
+* Data Kabupaten / Kota
+* Data Kecamatan
+* Data Desa
+* Data Kelurahan
+* Endpoint latest otomatis
+* Endpoint per tahun
+* JSON API
+* Playground pencarian wilayah
+* Format kode wilayah resmi Kemendagri
+
+---
+
+# Base URL
+
+```txt
+https://api.kemendesa.link/kode-wilayah
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Playground
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Website dokumentasi menyediakan playground pencarian wilayah secara langsung.
 
-## Learn More
+Fitur pencarian:
 
-To learn more about Next.js, take a look at the following resources:
+* Cari berdasarkan nama wilayah
+* Cari berdasarkan kode wilayah
+* Mendukung kode dengan atau tanpa titik
+* Menampilkan tipe wilayah
+* Menampilkan breadcrumb lokasi wilayah
+* Menampilkan jumlah wilayah yang dibawahi
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contoh kode yang didukung:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```txt
+11
+11.01
+11.01.01
+1101012001
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Endpoints
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 1. Data Terbaru
+
+Mengambil data kode wilayah terbaru tanpa perlu menentukan tahun.
+
+### Endpoint
+
+```txt
+/api/wilayah/latest/[satuan-wilayah]
+```
+
+### Full URL
+
+```txt
+https://api.kemendesa.link/kode-wilayah/api/wilayah/latest/[satuan-wilayah]
+```
+
+### Jenis Wilayah
+
+| Satuan Wilayah | Keterangan          |
+| -------------- | ------------------- |
+| provinsi       | Data provinsi       |
+| kabupaten      | Data kabupaten/kota |
+| kecamatan      | Data kecamatan      |
+| desa           | Data desa           |
+| kelurahan      | Data kelurahan      |
+
+### Contoh
+
+```txt
+https://api.kemendesa.link/kode-wilayah/api/wilayah/latest/provinsi
+```
+
+```txt
+https://api.kemendesa.link/kode-wilayah/api/wilayah/latest/desa
+```
+
+---
+
+## 2. Data Per Tahun
+
+Mengambil data kode wilayah berdasarkan tahun tertentu.
+
+### Endpoint
+
+```txt
+/api/wilayah/[tahun]/[satuan-wilayah].json
+```
+
+### Full URL
+
+```txt
+https://api.kemendesa.link/kode-wilayah/api/wilayah/[tahun]/[satuan-wilayah].json
+```
+
+### Contoh
+
+```txt
+https://api.kemendesa.link/kode-wilayah/api/wilayah/2025/provinsi.json
+```
+
+```txt
+https://api.kemendesa.link/kode-wilayah/api/wilayah/2025/kecamatan.json
+```
+
+---
+
+# Contoh Response
+
+```json
+{
+  "metadata": {
+    "version": "2025.1",
+    "source": {
+      "name": "cahyadsn/wilayah",
+      "url": "https://github.com/cahyadsn/wilayah",
+      "total_data": 38
+    }
+  },
+
+  "data": [
+    {
+      "code": "11",
+      "name": "Aceh"
+    }
+  ]
+}
+```
+
+---
+
+# Struktur Kode Wilayah
+
+## Provinsi
+
+```txt
+11
+```
+
+---
+
+## Kabupaten / Kota
+
+```txt
+11.01
+```
+
+---
+
+## Kecamatan
+
+```txt
+11.01.01
+```
+
+---
+
+## Desa / Kelurahan / Desa Adat
+
+```txt
+11.01.01.2001
+```
+
+---
+
+# Penjelasan Struktur
+
+| Tingkat        | Jumlah Digit | Contoh        |
+| -------------- | ------------ | ------------- |
+| Provinsi       | 2 digit      | 11            |
+| Kabupaten/Kota | 4 digit      | 11.01         |
+| Kecamatan      | 6 digit      | 11.01.01      |
+| Desa/Kelurahan | 10 digit     | 11.01.01.2001 |
+
+---
+
+# Tipe Wilayah Desa
+
+Digit pertama pada kode desa/kelurahan menentukan jenis wilayah:
+
+| Prefix | Jenis     |
+| ------ | --------- |
+| 1xxx   | Kelurahan |
+| 2xxx   | Desa      |
+| 3xxx   | Desa Adat |
+
+---
+
+# Metadata
+
+Metadata tersedia pada setiap file JSON.
+
+Contoh:
+
+```json
+{
+  "metadata": {
+    "version": "2025.1",
+    "source": {
+      "name": "cahyadsn/wilayah",
+      "url": "https://github.com/cahyadsn/wilayah",
+      "total_data": 75266
+    }
+  }
+}
+```
+
+---
+
+# Sumber Data
+
+Data wilayah menggunakan referensi resmi dan repository berikut:
+
+* https://github.com/cahyadsn/wilayah
+
+---
+
+# Tech Stack
+
+* Next.js
+* TypeScript
+* Tailwind CSS
+* Vercel
+
+---
+
+# Lisensi
+
+MIT
