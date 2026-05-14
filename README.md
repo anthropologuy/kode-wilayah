@@ -1,6 +1,7 @@
 # API Kode Wilayah Indonesia
 
 API kode wilayah administrasi Indonesia berdasarkan Kepmendagri terbaru.
+Sumber data: https://github.com/cahyadsn/wilayah
 
 ---
 

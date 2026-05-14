@@ -102,7 +102,8 @@ export default async function HomePage() {
 
         <p className="text-lg text-gray-700 mb-2">
           API kode wilayah administrasi Indonesia
-          berdasarkan Kepmendagri terbaru.
+          berdasarkan Kepmendagri terbaru <br />
+          Sumber data dari <strong>https://github.com/cahyadsn/wilayah</strong>
         </p>
 
         <div className="text-sm text-gray-500 mb-8">
