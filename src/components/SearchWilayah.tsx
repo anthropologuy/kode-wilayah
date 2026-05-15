@@ -148,7 +148,7 @@ export default function SearchWilayah() {
   <>
 
     <div className="mt-6 mb-3 text-sm font-semibold text-gray-700">
-      Hasil pencarian:
+      Hasil pencarian: <br />(dibatasi max 5 entry karena datasetnya besar)
     </div>
 
     <div className="space-y-4">

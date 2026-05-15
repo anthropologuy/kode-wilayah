@@ -205,7 +205,7 @@ export async function GET(
   // =====================
 
   const results = filtered
-    .slice(0, 20)
+    .slice(0, 5)
     .map((item: any) => {
 
       const parts =
